@@ -103,7 +103,7 @@ public class agents {
     }
     
     public boolean verifFicheAgent(){
-        String pathFicheAgent = "./src/main/java/com/mspr/projetmspr/FicheAgent/txt/"+this.alias+".txt";
+        String pathFicheAgent = "/var/jenkins_home/workspace/java_executor/javamspr"+this.alias+".txt";
         
         File fiche = new File(pathFicheAgent);
   
@@ -112,7 +112,7 @@ public class agents {
     }
     
     public String getPathFicheAgent(String alias){
-        String pathFicheAgent = "./src/main/java/com/mspr/projetmspr/FicheAgent/txt/"+this.alias+".txt";
+        String pathFicheAgent = "/var/jenkins_home/workspace/java_executor/javamspr/"+this.alias+".txt";
         
        return pathFicheAgent;
     }
