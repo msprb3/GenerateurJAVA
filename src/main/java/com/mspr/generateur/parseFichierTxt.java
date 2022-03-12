@@ -11,12 +11,6 @@ import java.io.*;
  * @author adaoudi
  */
 
-/* Ã  chaque itÃ©ration du while :  - lire la ligne courante  
-     *                            - deffinition d'un separateur par tabulation 
-     *                            - stock le premier mot dans la premiÃ¨re case du tbaleau et le deuxiÃ¨me mot dans la deuxiÃ¨me case
-     *                            - initialise une nouvel instance de la classe equipement
-     *                            - ajoute le nouvel objet dans la liste d'objet dequipement
-    */
 
 public class parseFichierTxt {
     
@@ -24,7 +18,7 @@ public class parseFichierTxt {
     public static HashMap<String,equipements> parseliste(){
         
         
-        String pathListEquipement = "C:/Users/abdel/OneDrive/Documents/NetBeansProjects/MsprJava/Materiel/liste.txt"; 
+        String pathListEquipement = "/var/jenkins_home/workspace/java_executor/javamspr/liste.txt"; 
         String nomEquipement = " ";        
         String description = " ";         
         HashMap<String,equipements> mapEquipement = new HashMap<>();
@@ -63,7 +57,7 @@ public class parseFichierTxt {
     
     public static List<agents> parseAgent(){
         
-        String pathListStaff = "C:/Users/abdel/OneDrive/Documents/NetBeansProjects/MsprJava/Agents/staff.txt"; 
+        String pathListStaff = "/var/jenkins_home/workspace/java_executor/javamspr/staff.txt"; 
         
        
         List<agents> listagents = new ArrayList<>();
@@ -121,14 +115,15 @@ public class parseFichierTxt {
             
             //On recupÃ¨re l'alias de l'agent courant. 
             alias = bufferStaff[index];
-            pathFicheAgent = "C:/Users/abdel/OneDrive/Documents/NetBeansProjects/MsprJava/FicheAgent/txt/" + alias + ".txt";
+            pathFicheAgent = "/var/jenkins_home/workspace/java_executor/javamspr/" + alias + ".txt";
             pathPhotoId = "../../Identite/"+alias+".jpg";
+            
             //verifFicheAgent(alias) retourne "true" si la fiche agent existe et retourne "false" si elle n'existe pas
             presenceFicheAgent = parseFichierTxt.verifFicheAgent(alias);
             
             //si la fiche agent n'existe pas le code dans le bloc "if" n'est pas executer 
             if (presenceFicheAgent) 
-            {   
+            {   //Si jamais ça suffit pas, on gère les exception (erreurs de lecture) avec try catch 
                 try (final BufferedReader bufferFicheAgent = new BufferedReader(new FileReader(pathFicheAgent))) {
                     
                     //Variable pour le besoin interne de ce bloc 
@@ -145,7 +140,7 @@ public class parseFichierTxt {
                      
                     int emplacement_ligne_vide = 0;
              
-                    //Variable pour les passer dans les paramettre du constructeur de agents() il sont crÃ©e ici car si la fiche est pas présente il sont pas crée inutilement
+                    //Variable a passer dans les paramettre du constructeur de agents() il sont crée ici car si la fiche est pas présente il sont pas crée inutilement
                     String detailIntervention ="";
                     
                     String pass = "";
@@ -154,23 +149,30 @@ public class parseFichierTxt {
                     
                     String nom = "";
                     
+                   
                     
-                    //==========================================================
-                    
-                    //Lire le fichier ligne par ligne et enregistrer tous sa dans une seul variable
+                    //Lire le fichier ligne par ligne et enregistrer tous sa dans une seul chaine de caractère separer par des espaces 
                     while ((ligne = bufferFicheAgent.readLine()) != null) 
                     { 
                         totalContenuLigne = totalContenuLigne + ligne + " ";
 
                     }
-                    //la variable est decouper en plusieurs chaine de caractÃ¨re stocker dans un tableau de String
+                    //la variable est decouper en plusieurs chaine de caractère stocker dans un tableau de String
                     bufferMotFicheAgent = totalContenuLigne.split(" ");
                     
-                    //ici on recupÃ¨re la taille du buffer on aura besoin pour faire tourner les "for"
+                    //ici on recupère la taille du buffer on aura besoin comme limite pour nos boucles for
                     taille_bufferMotFicheAgent = bufferMotFicheAgent.length;
                     
+                     /* ---------------------[traitement sur tableau de string[] bufferMotFicheAgent]---------------------------------
+                     *      - case 0 et 1 : Nom / prenom.                                                                            |
+                     *      - La ligne au dessus de la ligne vide c'est le mot de passe.                                             |
+                     *      - les case entre le prenom et le mot de passe c'est les details sur l'intervention.                      |
+                     *      - tous ce qui est après la ligne vide c'est les equipement utiliser par l'agent pour sont intervention.  |
+                     */--------------------------------------------------------------------------------------------------------------|
+                    //On recupère le nom
+                    nom = bufferMotFicheAgent[0]; 
                     
-                    nom = bufferMotFicheAgent[0];
+                    //On recupère le prenom
                     prenom = bufferMotFicheAgent[1];
                     
                     //On recupère le mot de pass
@@ -184,19 +186,13 @@ public class parseFichierTxt {
                     }
                     
                     
-                    //On recupère les infos sur l'agent dans la variable intervention
-                    for(int index_fonction = 2;index_fonction <  emplacement_ligne_vide-1; index_fonction++ ){
+                    //On recupère les details de l'intervention 
+                    for(int index_fonction = 2; index_fonction <  emplacement_ligne_vide-1; index_fonction++ ){
                         detailIntervention = detailIntervention + bufferMotFicheAgent[index_fonction] +" ";
                     }
                     
-                    //On recupÃ¨re le nom des equipement utiliser par l'agent pour sont intervention 
-                    
-                    /*  traitement sur mon buffer -> 
-                     *      case 0 et 1 : Nom / prenom 
-                     *      La ligne au dessus de la ligne vide c'est le mot de passe 
-                     *      les case entre le prenom et le mot de passe c'est les information sur l'intervention 
-                     *      tous ce qui est aprÃ¨s la ligne vide c'est les equipement utiliser par l'agent pour sont intervention
-                     */
+                    //On recupère le nom des equipement utiliser par l'agent pour sont intervention 
+
                     taille_bufferEquipementUtiliser = taille_bufferMotFicheAgent - emplacement_ligne_vide;
                     
                     String[] bufferEquipementUtiliser;
@@ -210,7 +206,7 @@ public class parseFichierTxt {
                     
                     
                    
-
+                    //Création de l'agent 
                     agents agent = new agents(nom, prenom, detailIntervention, pass, alias,pathPhotoId, bufferEquipementUtiliser);
                     
                     listagents.add(agent);
@@ -228,7 +224,7 @@ public class parseFichierTxt {
 
     
     public static boolean verifFicheAgent(String alias){
-        String pathFicheAgent = "C:/Users/abdel/OneDrive/Documents/NetBeansProjects/MsprJava/FicheAgent/txt/"+alias+".txt";
+        String pathFicheAgent = "/var/jenkins_home/workspace/java_executor/javamspr/"+alias+".txt";
         File fiche = new File(pathFicheAgent);
         
         return fiche.isFile();
