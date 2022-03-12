@@ -40,7 +40,7 @@ public class parseFichierTxt {
 
                     mapEquipement.put(nomEquipement, equipement);
             }
-            equipements equipementRien = new equipements("Vide","Vide");
+            equipements equipementRien = new equipements("Vide","Vide");//ceci correspond au fait que l'agent na aucun equipement 
             mapEquipement.put("Vide", equipementRien);
         }
         catch (IOException e) 
@@ -69,16 +69,9 @@ public class parseFichierTxt {
         
         String totalLigne;
         totalLigne = "";
-        
-        
 
         try(BufferedReader BufferStaff = new BufferedReader(new FileReader(pathListStaff))) 
         {
-            
-            
-            /* a  chaque itération du while :  - lire la ligne courante  
-                                              - initialise une nouvel instance de la classe agent avec l'alias de l'agent
-                                              - ajoute le nouvel objet dans la liste d'objet agent*/
             
             while ((ligne = BufferStaff.readLine()) != null) {
                    totalLigne = totalLigne + ligne + " ";      
@@ -110,10 +103,10 @@ public class parseFichierTxt {
         //La list que notre methode vas retourner 
         List<agents> listagents = new ArrayList<>();
         
-        //Ce code sera executer autant de fois que d'agent en intervention (fiche agent prÃ©sente)
+        //Ce code sera executer autant de fois que d'agent en intervention (fiche agent présente)
         for (int index =0;index < bufferStaff.length ; index++) {
             
-            //On recupÃ¨re l'alias de l'agent courant. 
+            //On recupère l'alias de l'agent courant. 
             alias = bufferStaff[index];
             pathFicheAgent = "/var/jenkins_home/workspace/java_executor/javamspr/" + alias + ".txt";
             pathPhotoId = "../../Identite/"+alias+".jpg";
