@@ -29,10 +29,6 @@ public class generateur {
         List<agents> listAgents = new ArrayList<>();
         
         listAgents = parseFichierTxt.parseAgent();
-  
-         
-       
-         //listAgents.get(1).afficheInfoAgents();
          
         //######################################################################
         //Generation des pages html agent.html
@@ -49,23 +45,20 @@ public class generateur {
                 nom = listAgents.get(index).getAlias();
                 prenom = listAgents.get(index).getNom();
                 pathPhotoID = listAgents.get(index).getpathPhotoID();
-                
-                //contenuHtml = templateHtml.generateListEquipement(listAgents.get(index), mapEquipement);
-                
-                
-                
+                   
+                            
                 contenuHtml = templateHtml.buildAgentHtml(listAgents.get(index),templateHtml.generateListEquipement(listAgents.get(index), mapEquipement));
                 
-                pathNomFichierHtml = "C:/wamp64/www/javamspr/FicheAgent/html/"+listAgents.get(index).getAlias()+".html";
+                pathNomFichierHtml = "/var/jenkins_home/workspace/java_executor/javamspr/"+listAgents.get(index).getAlias()+".html";
                 
                 StringBuilder ecrire = new StringBuilder();
                 ecrire.append(contenuHtml);
                 FileWriter fstream = new FileWriter(pathNomFichierHtml);
-                BufferedWriter out = new BufferedWriter(fstream);
+                    BufferedWriter out = new BufferedWriter(fstream);
                 out.write(ecrire.toString());
                 out.close();
                 
-                System.out.println("fichier cree");
+                System.out.println("La creation de la fiche html de l\'agent "+listAgents.get(index).getNom()+" c'est derouler avec succès");
         }
                 
     }
