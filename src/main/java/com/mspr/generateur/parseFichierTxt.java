@@ -161,7 +161,8 @@ public class parseFichierTxt {
                      *      - La ligne au dessus de la ligne vide c'est le mot de passe.                                             |
                      *      - les case entre le prenom et le mot de passe c'est les details sur l'intervention.                      |
                      *      - tous ce qui est après la ligne vide c'est les equipement utiliser par l'agent pour sont intervention.  |
-                     */--------------------------------------------------------------------------------------------------------------|
+                     *--------------------------------------------------------------------------------------------------------------|
+                     */
                     //On recupère le nom
                     nom = bufferMotFicheAgent[0]; 
                     
