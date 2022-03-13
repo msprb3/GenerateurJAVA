@@ -10,23 +10,12 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
-    <build>
-      <plugins>
-        <plugin>
-          <!-- Build an executable JAR -->
-          <groupId>com.mspr</groupId>
-          <artifactId>generateur</artifactId>
-          <version>1.0-SNAPSHOT</version>
-          <configuration>
-            <archive>
-              <manifest>
-                <addClasspath>true</addClasspath>
-                <!--<classpathPrefix>lib/</classpathPrefix>-->
-                <mainClass>com.mspr.generateur</mainClass>
-              </manifest>
-            </archive>
-          </configuration>
-        </plugin>
-      </plugins>
+   <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 </project>
