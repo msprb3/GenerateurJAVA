@@ -58,7 +58,7 @@ public class generateur {
                 out.write(ecrire.toString());
                 out.close();
                 
-                System.out.println("La creation de la fiche html de l\'agent "+listAgents.get(index).getNom()+" c'est derouler avec succès");
+                System.out.println("La création de la fiche html de l\'agent "+listAgents.get(index).getNom()+" s'est deroulée avec succès");
         }
                 
     }
